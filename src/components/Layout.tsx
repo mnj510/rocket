@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { AppShell, Navbar, Header, Text, Button, Group, Stack, MediaQuery, Burger, useMantineTheme } from '@mantine/core'
+import { AppShell, Text, Button, Group, Stack, Burger, useMantineTheme } from '@mantine/core'
 import { useRouter, usePathname } from 'next/navigation'
 import { IconDashboard, IconUsers, IconSunrise, IconClipboardList, IconLogout } from '@tabler/icons-react'
 
@@ -64,7 +64,7 @@ export default function Layout({ children, user, onLogout }: LayoutProps) {
       <AppShell.Header>
         <Group h="100%" px="md" justify="space-between">
           <Group>
-            <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+            <div className="sm:hidden">
               <Burger
                 opened={opened}
                 onClick={() => setOpened((o) => !o)}
@@ -72,7 +72,7 @@ export default function Layout({ children, user, onLogout }: LayoutProps) {
                 color={theme.colors.gray[6]}
                 mr="xl"
               />
-            </MediaQuery>
+            </div>
             <Text size="lg" fw={700}>Rocket App</Text>
           </Group>
           
@@ -85,7 +85,7 @@ export default function Layout({ children, user, onLogout }: LayoutProps) {
         </Group>
       </AppShell.Header>
 
-      <AppShell.Navbar p="md">
+      <AppShell.Navbar>
         <Stack gap="xs">
           {navigationItems
             .filter(item => !item.adminOnly || user.isAdmin)

@@ -41,7 +41,7 @@ export default function Dashboard({ user }: DashboardProps) {
               return getMustRecord(user.id, date)
             })
           )
-        )
+        ])
         
         setUserWakeupLogs(wakeupLogs)
         setUserMustRecords(mustRecords.filter(Boolean) as MustRecord[])
@@ -66,7 +66,7 @@ export default function Dashboard({ user }: DashboardProps) {
     
     const wakeupSuccess = userWakeupLogs.filter(log => 
       log.wakeup_status === 'success' && 
-      dayjs(log.date).isBetween(monthStart, monthEnd, 'day', '[]')
+      dayjs(log.date).isSame(monthStart, 'month')
     ).length
 
     const totalDays = monthEnd.diff(monthStart, 'day') + 1
