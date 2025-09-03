@@ -15,17 +15,18 @@
             console.log('Base path:', basePath);
             console.log('Remaining path:', remainingPath);
             
+            // 모든 경로를 메인 페이지로 리다이렉트
             if (remainingPath && remainingPath !== '/') {
                 // URL을 basePath + ?/ + remainingPath로 변경
                 var newUrl = basePath + '/?/' + remainingPath.slice(1);
                 console.log('Redirecting to:', newUrl);
                 
                 // 즉시 리다이렉트
-                window.location.href = newUrl;
+                window.location.replace(newUrl);
             } else {
                 // 기본 경로인 경우 메인 페이지로 이동
                 console.log('Redirecting to base path');
-                window.location.href = basePath + '/';
+                window.location.replace(basePath + '/');
             }
         })();
     </script>
@@ -35,11 +36,11 @@
     <p>잠시만 기다려주세요...</p>
     
     <script>
-        // 5초 후 자동으로 메인 페이지로 이동 (백업)
+        // 2초 후 자동으로 메인 페이지로 이동 (백업)
         setTimeout(function() {
             console.log('Fallback redirect to base path');
-            window.location.href = '/rocket/';
-        }, 5000);
+            window.location.replace('/rocket/');
+        }, 2000);
     </script>
 </body>
 </html>

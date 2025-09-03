@@ -31,25 +31,8 @@ export default function Home() {
           const targetPath = '/' + pathParam
           console.log('Redirecting to:', targetPath)
           
-          // 약간의 지연 후 라우팅 (상태 업데이트를 위해)
-          setTimeout(() => {
-            router.replace(targetPath)
-          }, 100)
-          return
-        }
-      }
-      
-      // URL에 직접 경로가 있는지 확인 (예: /rocket/dashboard)
-      const pathname = window.location.pathname
-      if (pathname.includes('/rocket/') && pathname !== '/rocket/' && pathname !== '/rocket') {
-        const directPath = pathname.replace('/rocket', '')
-        console.log('Direct path found:', directPath)
-        
-        if (directPath) {
-          console.log('Redirecting to direct path:', directPath)
-          setTimeout(() => {
-            router.replace(directPath)
-          }, 100)
+          // 즉시 라우팅
+          router.replace(targetPath)
           return
         }
       }
