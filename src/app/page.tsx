@@ -18,14 +18,40 @@ export default function Home() {
   useEffect(() => {
     // GitHub Pages SPA 라우팅 처리
     if (typeof window !== 'undefined') {
-      const url = new URL(window.location.href)
-      const pathParam = url.searchParams.get('?/')
+      const currentUrl = window.location.href
+      console.log('Main page loaded, Current URL:', currentUrl)
       
-      if (pathParam) {
-        // URL 파라미터에서 경로 추출하여 라우팅
-        const targetPath = '/' + pathParam
-        router.replace(targetPath)
-        return
+      // URL에 ?/ 패턴이 있는지 확인
+      if (currentUrl.includes('/?/')) {
+        const pathParam = currentUrl.split('/?/')[1]
+        console.log('Path parameter found:', pathParam)
+        
+        if (pathParam) {
+          // URL 파라미터에서 경로 추출하여 라우팅
+          const targetPath = '/' + pathParam
+          console.log('Redirecting to:', targetPath)
+          
+          // 약간의 지연 후 라우팅 (상태 업데이트를 위해)
+          setTimeout(() => {
+            router.replace(targetPath)
+          }, 100)
+          return
+        }
+      }
+      
+      // URL에 직접 경로가 있는지 확인 (예: /rocket/dashboard)
+      const pathname = window.location.pathname
+      if (pathname.includes('/rocket/') && pathname !== '/rocket/' && pathname !== '/rocket') {
+        const directPath = pathname.replace('/rocket', '')
+        console.log('Direct path found:', directPath)
+        
+        if (directPath) {
+          console.log('Redirecting to direct path:', directPath)
+          setTimeout(() => {
+            router.replace(directPath)
+          }, 100)
+          return
+        }
       }
     }
     
