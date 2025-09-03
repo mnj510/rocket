@@ -1,7 +1,12 @@
-import { supabase, Member, WakeupLog, MustRecord, MobileLoginCode } from '@/lib/supabase'
+import { supabase, isSupabaseConfigured, Member, WakeupLog, MustRecord, MobileLoginCode } from '@/lib/supabase'
 
 // 멤버 관련 함수들
 export const getMembers = async (): Promise<Member[]> => {
+  if (!isSupabaseConfigured()) {
+    console.warn('Supabase is not configured')
+    return []
+  }
+  
   const { data, error } = await supabase
     .from('members')
     .select('*')
@@ -12,6 +17,10 @@ export const getMembers = async (): Promise<Member[]> => {
 }
 
 export const addMember = async (name: string, memberCode: string): Promise<Member> => {
+  if (!isSupabaseConfigured()) {
+    throw new Error('Supabase is not configured')
+  }
+  
   const { data, error } = await supabase
     .from('members')
     .insert([{ name, member_code: memberCode }])
@@ -23,6 +32,10 @@ export const addMember = async (name: string, memberCode: string): Promise<Membe
 }
 
 export const deleteMember = async (id: string): Promise<void> => {
+  if (!isSupabaseConfigured()) {
+    throw new Error('Supabase is not configured')
+  }
+  
   const { error } = await supabase
     .from('members')
     .delete()
@@ -33,6 +46,11 @@ export const deleteMember = async (id: string): Promise<void> => {
 
 // 기상 로그 관련 함수들
 export const getWakeupLogs = async (memberId: string, month: string): Promise<WakeupLog[]> => {
+  if (!isSupabaseConfigured()) {
+    console.warn('Supabase is not configured')
+    return []
+  }
+  
   const { data, error } = await supabase
     .from('wakeup_logs')
     .select('*')
