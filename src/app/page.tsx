@@ -16,12 +16,25 @@ export default function Home() {
   const pathname = usePathname()
 
   useEffect(() => {
+    // GitHub Pages SPA 라우팅 처리
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.href)
+      const pathParam = url.searchParams.get('?/')
+      
+      if (pathParam) {
+        // URL 파라미터에서 경로 추출하여 라우팅
+        const targetPath = '/' + pathParam
+        router.replace(targetPath)
+        return
+      }
+    }
+    
     // 로컬 스토리지에서 사용자 정보 복원
     const savedUser = localStorage.getItem('user')
     if (savedUser) {
       setUser(JSON.parse(savedUser))
     }
-  }, [])
+  }, [router])
 
   const handleLogin = (userData: { id: string; name: string; member_code: string; isAdmin: boolean }) => {
     setUser(userData)
